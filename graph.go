@@ -14,8 +14,8 @@ func NewGraph() *Graph {
 
 func (g *Graph) Create() uint {
 	id := uint(len(g.positiveVertices))
-	g.positiveVertices = append(g.positiveVertices, 0)
-	g.negativeVertices = append(g.negativeVertices, 0)
+	g.positiveVertices = append(g.positiveVertices, 0) // TODO: guard with mutex
+	g.negativeVertices = append(g.negativeVertices, 0) // TODO: guard with mutex
 	return id
 }
 
@@ -56,12 +56,12 @@ func (g *Graph) ReadNegative(head uint) []uint {
 func (g *Graph) Connect(tail uint, head uint) {
 
 	positive := uint(len(g.edges))
-	g.edges = append(g.edges, head)
-	g.edges = append(g.edges, g.positiveVertices[tail])
-	g.positiveVertices[tail] = positive
+	g.edges = append(g.edges, head) // TODO: use immutable data structure
+	g.edges = append(g.edges, g.positiveVertices[tail]) // TODO: use immutable data structure
+	g.positiveVertices[tail] = positive // TODO: guard with mutex
 
 	negative := uint(len(g.edges))
-	g.edges = append(g.edges, tail)
-	g.edges = append(g.edges, g.negativeVertices[head])
-	g.negativeVertices[head] = negative
+	g.edges = append(g.edges, tail) // TODO: use immutable data structure
+	g.edges = append(g.edges, g.negativeVertices[head]) // TODO: use immutable data structure
+	g.negativeVertices[head] = negative // TODO: guard with mutex
 }
